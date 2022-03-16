@@ -7,9 +7,11 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
+@Component
 public class BinanceStompSessionHandler extends StompSessionHandlerAdapter {
     private final Logger logger = LogManager.getLogger(BinanceStompSessionHandler.class);
 
@@ -17,7 +19,7 @@ public class BinanceStompSessionHandler extends StompSessionHandlerAdapter {
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         logger.info("New session established : " + session.getSessionId());
         session.subscribe("/ws/btcusdt@trade", this);
-        logger.info("Subscribed to /topic/messages");
+        logger.info("Subscribed to /ws/btcusdt@trade");
     }
 
     @Override
