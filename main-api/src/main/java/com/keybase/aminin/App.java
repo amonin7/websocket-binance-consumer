@@ -13,7 +13,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 @SpringBootApplication
 @EnableScheduling
 public class App {
-    private static final String URL = "wss://stream.binance.com:9443";
+    private static final String URL = "wss://stream.binance.com:9443/";
 
     @Autowired
     BinanceStompSessionHandler sessionHandler;
@@ -25,7 +25,7 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
-    @Scheduled(fixedDelay=5000)
+    @Scheduled(fixedDelay=3000)
     public void sendMessageToServer() {
         stompClient.connect(URL, sessionHandler);
     }
