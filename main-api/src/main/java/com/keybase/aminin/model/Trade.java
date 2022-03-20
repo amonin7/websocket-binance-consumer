@@ -13,22 +13,18 @@ public class Trade {
     private String eventType;
     @JsonAlias("E")
     private long eventTime;
+    @JsonAlias("T")
+    private long tradeTime;
     @JsonAlias("s")
     private String symbol;
     @JsonAlias("t")
     private long tradeId;
     @JsonAlias("p")
-    private String price;
+    private Double price;
     @JsonAlias("q")
-    private String quantity;
-    @JsonAlias("b")
-    private long buyerId;
-    @JsonAlias("a")
-    private long sellerId;
-    @JsonAlias("T")
-    private long tradeTime;
+    private Double quantity;
     @JsonAlias("m")
     private boolean isMarketMaker;
-    @JsonAlias("M")
-    private boolean ignoredProperty;
+    @JsonAlias("X")
+    private String ExchangeType;
 }
