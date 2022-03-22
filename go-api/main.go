@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"github.com/segmentio/kafka-go"
 	"io/ioutil"
@@ -39,13 +40,15 @@ type ExchInfo struct {
 }
 
 var ctx = context.Background()
+var infos ExchInfo
 
 const (
-	KafkaBroker = "kafka:29092"
-	KafkaTopic  = "trades"
+	KafkaBroker  = "kafka:29092"
+	KafkaTopic   = "trades"
+	streamsLimit = 199
 )
 
-func getCurrentTradePairs() []SymbolInfo {
+func initializeTradePairs() []SymbolInfo {
 	resp, err := http.Get("https://api.binance.com/api/v3/exchangeInfo")
 	if err != nil {
 		log.Fatalln(err)
@@ -62,12 +65,8 @@ func getCurrentTradePairs() []SymbolInfo {
 		log.Fatalln(err)
 	}
 
-	symbols := exchInfo.Symbols
-	for i, el := range symbols {
-		symbols[i] = SymbolInfo{strings.ToLower(el.Symbol)}
-	}
-
-	return symbols
+	infos = exchInfo
+	return exchInfo.Symbols
 }
 
 func makeCombinedStreamsUrl(symbols []SymbolInfo) []string {
@@ -76,14 +75,14 @@ func makeCombinedStreamsUrl(symbols []SymbolInfo) []string {
 	oneUrl := ""
 	var result []string
 	for i, el := range symbols {
-		if i%199 == 0 {
+		if i%streamsLimit == 0 {
 			if oneUrl != "" {
 				oneUrl = oneUrl[:len(oneUrl)-1]
 				result = append(result, oneUrl)
 			}
-			oneUrl = urlPrefix + el.Symbol + streamPostfix
+			oneUrl = urlPrefix + strings.ToLower(el.Symbol) + streamPostfix
 		} else {
-			oneUrl += el.Symbol + "@trade/"
+			oneUrl += strings.ToLower(el.Symbol) + "@trade/"
 		}
 	}
 	if result[len(result)-1] == oneUrl {
@@ -126,7 +125,40 @@ func consumeFromBinanceSocket(socketUrl string, messages chan string, w *kafka.W
 	}
 }
 
+func handleGetTradePairs(w http.ResponseWriter, r *http.Request) {
+	if infos.Symbols == nil {
+		initializeTradePairs()
+	}
+	rawResponse, err := json.Marshal(infos)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(rawResponse)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+}
+
+func newServer() *http.Server {
+	r := mux.NewRouter()
+
+	r.HandleFunc("/tradePairs", handleGetTradePairs).Methods(http.MethodGet)
+
+	return &http.Server{
+		Handler:      r,
+		Addr:         "0.0.0.0:8081",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+}
+
 func main() {
+	symbols := initializeTradePairs()
+
 	// wait for components to be initialized
 	time.Sleep(20 * time.Second)
 
@@ -136,10 +168,16 @@ func main() {
 	}
 	messages := make(chan string)
 
-	urls := makeCombinedStreamsUrl(getCurrentTradePairs())
+	urls := makeCombinedStreamsUrl(symbols)
+	fmt.Println(urls)
 	for _, el := range urls {
 		go consumeFromBinanceSocket(el, messages, &w)
 	}
+
+	srv := newServer()
+	log.Printf("Start serving on %s", srv.Addr)
+	go srv.ListenAndServe()
+
 	for m := range messages {
 		fmt.Printf("%s\n", m)
 	}
