@@ -41,5 +41,7 @@ services:
   go-handler:
     depends_on:
       - init-kafka
+    ports:
+      - "8081:8081"
     build: go-api
 
