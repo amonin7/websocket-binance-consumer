@@ -12,9 +12,5 @@ import java.util.List;
 @Data
 public class ExchangeInfoResponse {
     @JsonRawValue
-    private String timezone;
-    @JsonRawValue
-    private Long serverTime;
-    @JsonRawValue
     private List<SymbolExchangeInfo> symbols;
 }

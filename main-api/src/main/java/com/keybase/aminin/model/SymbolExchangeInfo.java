@@ -11,16 +11,4 @@ import lombok.NoArgsConstructor;
 public class SymbolExchangeInfo {
     @JsonRawValue
     private String symbol;
-    @JsonRawValue
-    private String status;
-    @JsonRawValue
-    private String baseAsset;
-    @JsonRawValue
-    private String baseAssetPrecision;
-    @JsonRawValue
-    private String quoteAsset;
-    @JsonRawValue
-    private String quotePrecision;
-    @JsonRawValue
-    private String quoteAssetPrecision;
 }
