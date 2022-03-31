@@ -7,4 +7,5 @@ import java.util.List;
 public interface SymbolService {
     SymbolMedianData getMedianDataBySymbol(String symbol);
     List<String> getAllSymbols();
+    void initializeSymbolsStorage();
 }
