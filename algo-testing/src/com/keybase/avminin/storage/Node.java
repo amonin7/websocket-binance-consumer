@@ -33,6 +33,10 @@ public class Node {
     private Node childY;
     private Node childZ;
 
+    public Node() {
+        value = -1;
+    }
+
     public Node getFieldByIndex(int index) {
         return switch (index) {
             case 0 -> childA;
@@ -65,38 +69,123 @@ public class Node {
         };
     }
 
-    public void setChildByIndex(int index, Node child) {
+    public Node setChildByIndex(int index, Node child) {
         switch (index) {
-            case 0 -> childA = child;
-            case 1 -> childB = child;
-            case 2 -> childC = child;
-            case 3 -> childD = child;
-            case 4 -> childE = child;
-            case 5 -> childF = child;
-            case 6 -> childG = child;
-            case 7 -> childH = child;
-            case 8 -> childI = child;
-            case 9 -> childJ = child;
-            case 10 -> childK = child;
-            case 11 -> childL = child;
-            case 12 -> childM = child;
-            case 13 -> childN = child;
-            case 14 -> childO = child;
-            case 15 -> childP = child;
-            case 16 -> childQ = child;
-            case 17 -> childR = child;
-            case 18 -> childS = child;
-            case 19 -> childT = child;
-            case 20 -> childU = child;
-            case 21 -> childV = child;
-            case 22 -> childW = child;
-            case 23 -> childX = child;
-            case 24 -> childY = child;
-            case 25 -> childZ = child;
+            case 0 -> {
+                childA = child;
+                return childA;
+            }
+            case 1 -> {
+                childB = child;
+                return childB;
+            }
+            case 2 -> {
+                childC = child;
+                return childC;
+            }
+            case 3 -> {
+                childD = child;
+                return childD;
+            }
+            case 4 -> {
+                childE = child;
+                return childE;
+            }
+            case 5 -> {
+                childF = child;
+                return childF;
+            }
+            case 6 -> {
+                childG = child;
+                return childG;
+            }
+            case 7 -> {
+                childH = child;
+                return childH;
+            }
+            case 8 -> {
+                childI = child;
+                return childI;
+            }
+            case 9 -> {
+                childJ = child;
+                return childJ;
+            }
+            case 10 -> {
+                childK = child;
+                return childK;
+            }
+            case 11 -> {
+                childL = child;
+                return childL;
+            }
+            case 12 -> {
+                childM = child;
+                return childM;
+            }
+            case 13 -> {
+                childN = child;
+                return childN;
+            }
+            case 14 -> {
+                childO = child;
+                return childO;
+            }
+            case 15 -> {
+                childP = child;
+                return childP;
+            }
+            case 16 -> {
+                childQ = child;
+                return childQ;
+            }
+            case 17 -> {
+                childR = child;
+                return childR;
+            }
+            case 18 -> {
+                childS = child;
+                return childS;
+            }
+            case 19 -> {
+                childT = child;
+                return childT;
+            }
+            case 20 -> {
+                childU = child;
+                return childU;
+            }
+            case 21 -> {
+                childV = child;
+                return childV;
+            }
+            case 22 -> {
+                childW = child;
+                return childW;
+            }
+            case 23 -> {
+                childX = child;
+                return childX;
+            }
+            case 24 -> {
+                childY = child;
+                return childY;
+            }
+            case 25 -> {
+                childZ = child;
+                return childZ;
+            }
             default -> throw new IllegalArgumentException(
                     "The provided index does not match to any child"
             );
         }
     }
 
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
 }

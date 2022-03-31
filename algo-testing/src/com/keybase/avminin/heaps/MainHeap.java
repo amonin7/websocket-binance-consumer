@@ -3,30 +3,30 @@ package com.keybase.avminin.heaps;
 import java.util.function.BiFunction;
 
 public class MainHeap implements HeapADT {
-    protected static final int MAX_HEAP_SIZE = Integer.MAX_VALUE / 16;
+    protected static final int MAX_HEAP_SIZE = Integer.MAX_VALUE / 32;
 
-    protected int[] heapArray;
-    protected final BiFunction<Integer, Integer, Boolean> comparator;
+    protected double[] heapArray;
+    protected final BiFunction<Double, Double, Boolean> comparator;
     protected int heapSize;
 
-    public MainHeap(int[] heapArray, BiFunction<Integer, Integer, Boolean> comparator) {
+    public MainHeap(double[] heapArray, BiFunction<Double, Double, Boolean> comparator) {
         this.heapArray = heapArray;
         this.comparator = comparator;
         this.heapSize = -1;
     }
 
     @Override
-    public boolean Insert(int e) {
+    public boolean Insert(double e) {
         return inertsElement(e);
     }
 
     @Override
-    public int GetTop() {
+    public double GetTop() {
         return getTopElement();
     }
 
     @Override
-    public int ExtractTop() {
+    public double ExtractTop() {
         return delTopElement();
     }
 
@@ -49,7 +49,7 @@ public class MainHeap implements HeapADT {
     }
 
     // Returns top element of heap data structure
-    protected int getTopElement() {
+    protected double getTopElement() {
         return heapSize >= 0 ? this.heapArray[0] : -1;
     }
 
@@ -68,14 +68,14 @@ public class MainHeap implements HeapADT {
     }
 
     private void swap(int i, int j) {
-        int tmp = heapArray[i];
+        double tmp = heapArray[i];
         heapArray[i] = heapArray[j];
         heapArray[j] = tmp;
     }
 
     // Deletes root of heap
-    protected int delTopElement() {
-        int del = -1;
+    protected double delTopElement() {
+        double del = -1;
         if (heapSize >= 0) {
             del = heapArray[0];
             swap(0, heapSize);
@@ -86,7 +86,7 @@ public class MainHeap implements HeapADT {
     }
 
     // insert key into Heap
-    protected boolean inertsElement(int key) {
+    protected boolean inertsElement(double key) {
         boolean insResult = false;
         if(heapSize < MAX_HEAP_SIZE) {
             insResult = true;

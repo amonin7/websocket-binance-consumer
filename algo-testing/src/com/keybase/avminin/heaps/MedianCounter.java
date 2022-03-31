@@ -6,16 +6,16 @@ public class MedianCounter {
     
     private final MainHeap left;
     private final MainHeap right;
-    private int m;
+    private double m;
 
     public MedianCounter(MainHeap left, MainHeap right) {
         this.left = left;
         this.right = right;
-        this.m = 0;
+        this.m = 0.0;
     }
 
     // Function implementing algorithm to find median so far.
-    public int getMedian(int e) {
+    public void addPrice(double e) {
         int sig = Utils.signum(left.GetCount(), right.GetCount());
         switch(sig) {
             case 1:
@@ -61,6 +61,16 @@ public class MedianCounter {
                 // Both heaps are balanced
                 m = Utils.mean(left.GetTop(), right.GetTop());
                 break;
+        }
+    }
+
+    // Function implementing algorithm to find median so far.
+    public double getMedian() {
+        int sig = Utils.signum(left.GetCount(), right.GetCount());
+        switch (sig) {
+            case 1 -> m = left.getTopElement();
+            case 0 -> m = Utils.mean(left.GetTop(), right.GetTop());
+            case -1 -> m = right.getTopElement();
         }
         return m;
     }
