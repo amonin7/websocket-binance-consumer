@@ -12,8 +12,10 @@ public class TickersHashMap {
     private MedianCounter[] medians;
     private List<String> tickers;
     public boolean isInitialized;
+    private final int maxHeapSize;
 
-    public TickersHashMap() {
+    public TickersHashMap(int maxHeapSize) {
+        this.maxHeapSize = maxHeapSize;
         this.isInitialized = false;
     }
 
@@ -53,7 +55,7 @@ public class TickersHashMap {
 
     private void populateMedians() {
         for (int i = 0; i < medians.length; ++i) {
-            medians[i] = new MedianCounter(new MaximumHeap(), new MinimumHeap());
+            medians[i] = new MedianCounter(new MaximumHeap(maxHeapSize), new MinimumHeap(maxHeapSize));
         }
     }
 }

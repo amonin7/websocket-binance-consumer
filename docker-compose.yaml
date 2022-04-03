@@ -54,3 +54,4 @@ services:
     environment:
       GO_API_HOST: http://go-handler:8081/tradePairs
       KAFKA_BOOTSTRAPADDRESS: kafka:29092
+      MAX_PRICES_AMOUNT_PER_TICKER: 32768

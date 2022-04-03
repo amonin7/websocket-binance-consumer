@@ -4,6 +4,10 @@ import com.keybase.aminin.utils.CmpUtils;
 
 public class MaximumHeap extends MainHeap {
     public MaximumHeap() {
-        super(new double[MAX_HEAP_SIZE], CmpUtils::gt);
+        this(MAX_HEAP_SIZE);
+    }
+
+    public MaximumHeap(int maxHeapSize) {
+        super(new double[maxHeapSize], CmpUtils::gt);
     }
 }

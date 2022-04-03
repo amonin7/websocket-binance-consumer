@@ -25,7 +25,6 @@ public class KafkaConsumerService {
     ) public void listenGroupFoo(Trade trade) {
         if (!storage.isInitialized) symbolService.initializeSymbolsStorage();
         storage.addPrice(trade.getSymbol(), trade.getPrice());
-        System.out.println("Received Message in group 'foo': " + trade.getPrice() + " key: " + trade.getSymbol());
     }
 
 }
