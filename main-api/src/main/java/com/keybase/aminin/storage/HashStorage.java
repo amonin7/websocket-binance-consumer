@@ -5,15 +5,19 @@ import java.util.List;
 public class HashStorage {
     private final boolean isInitialized;
     private final Node root;
+    private int tickerCounter = 0;
 
     public HashStorage(List<String> initTickers) {
         root = new Node();
-        int tickerIndex = 0;
         isInitialized = true;
         for (String ticker : initTickers) {
-            this.addTickerIntoTree(ticker, tickerIndex);
-            tickerIndex += 1;
+            this.addTickerIntoTree(ticker, tickerCounter);
+            tickerCounter += 1;
         }
+    }
+
+    public int getTickerCounter() {
+        return tickerCounter;
     }
 
     private void addTickerIntoTree(String ticker, int tickerIndex) {
@@ -21,7 +25,7 @@ public class HashStorage {
         Node cur = root;
         for (char aChar : chars) {
             int index = getIndexByChar(aChar);
-            Node curLetter = root.getFieldByIndex(index);
+            Node curLetter = cur.getFieldByIndex(index);
             if (curLetter == null) {
                 curLetter = new Node();
             }
@@ -36,7 +40,7 @@ public class HashStorage {
         } else if (Character.isLetter(aChar)) {
             return Character.toUpperCase(aChar) - 'A';
         }
-        return 73;
+        throw new IllegalArgumentException("Illegal character=" + aChar);
     }
 
     public int getTickerIndex(String ticker) {

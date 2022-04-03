@@ -19,7 +19,7 @@ public class TickersHashMap {
 
     public void initializeHashMap(List<String> initTickers) {
         this.hashStorage = new HashStorage(initTickers);
-        this.medians = new MedianCounter[initTickers.size()];
+        this.medians = new MedianCounter[hashStorage.getTickerCounter()];
         populateMedians();
         this.tickers = initTickers;
         this.isInitialized = true;

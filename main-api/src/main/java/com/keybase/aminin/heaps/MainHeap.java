@@ -3,7 +3,7 @@ package com.keybase.aminin.heaps;
 import java.util.function.BiFunction;
 
 public class MainHeap implements HeapADT {
-    protected static final int MAX_HEAP_SIZE = Integer.MAX_VALUE / 32;
+    protected static final int MAX_HEAP_SIZE = Integer.MAX_VALUE / (32 * 2048 * 2);
 
     protected double[] heapArray;
     protected final BiFunction<Double, Double, Boolean> comparator;
