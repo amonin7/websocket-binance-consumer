@@ -109,7 +109,6 @@ func consumeFromBinanceSocket(socketUrl string, messages chan string, w *kafka.W
 			return
 		}
 		tmString, err := json.Marshal(tradeMessage.OneTrade)
-		fmt.Println(string(tmString))
 		if err != nil {
 			fmt.Println(err)
 			return
