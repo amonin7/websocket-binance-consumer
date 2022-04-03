@@ -32,6 +32,16 @@ public class Node {
     private Node childX;
     private Node childY;
     private Node childZ;
+    private Node child0;
+    private Node child1;
+    private Node child2;
+    private Node child3;
+    private Node child4;
+    private Node child5;
+    private Node child6;
+    private Node child7;
+    private Node child8;
+    private Node child9;
 
     public Node() {
         value = -1;
@@ -65,6 +75,16 @@ public class Node {
             case 23 -> childX;
             case 24 -> childY;
             case 25 -> childZ;
+            case 26 -> child0;
+            case 27 -> child1;
+            case 28 -> child2;
+            case 29 -> child3;
+            case 30 -> child4;
+            case 31 -> child5;
+            case 32 -> child6;
+            case 33 -> child7;
+            case 34 -> child8;
+            case 35 -> child9;
             default -> null;
         };
     }
@@ -174,6 +194,46 @@ public class Node {
             case 25 -> {
                 childZ = child;
                 return childZ;
+            }
+            case 26 -> {
+                child0 = child;
+                return child0;
+            }
+            case 27 -> {
+                child1 = child;
+                return child1;
+            }
+            case 28 -> {
+                child2 = child;
+                return child2;
+            }
+            case 29 -> {
+                child3 = child;
+                return child3;
+            }
+            case 30 -> {
+                child4 = child;
+                return child4;
+            }
+            case 31 -> {
+                child5 = child;
+                return child5;
+            }
+            case 32 -> {
+                child6 = child;
+                return child6;
+            }
+            case 33 -> {
+                child7 = child;
+                return child7;
+            }
+            case 34 -> {
+                child8 = child;
+                return child8;
+            }
+            case 35 -> {
+                child9 = child;
+                return child9;
             }
             default -> throw new IllegalArgumentException(
                     "The provided index does not match to any child"
