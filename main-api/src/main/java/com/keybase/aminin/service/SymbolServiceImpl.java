@@ -27,7 +27,7 @@ public class SymbolServiceImpl implements SymbolService {
 
     @Override
     public SymbolMedianData getMedianDataBySymbol(String symbol) {
-        return new SymbolMedianData(symbol, 1, storage.getMedianByTicker(symbol), 77.7);
+        return storage.getSymbolMedianData(symbol);
     }
 
     @Override

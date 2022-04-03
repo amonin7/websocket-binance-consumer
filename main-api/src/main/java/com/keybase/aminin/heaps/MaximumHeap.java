@@ -1,10 +1,9 @@
 package com.keybase.aminin.heaps;
 
-
-import com.keybase.avminin.Utils;
+import com.keybase.aminin.utils.CmpUtils;
 
 public class MaximumHeap extends MainHeap {
     public MaximumHeap() {
-        super(new double[MAX_HEAP_SIZE], Utils::gt);
+        super(new double[MAX_HEAP_SIZE], CmpUtils::gt);
     }
 }

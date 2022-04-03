@@ -1,6 +1,6 @@
-package com.keybase.aminin;
+package com.keybase.aminin.utils;
 
-public class Utils {
+public class CmpUtils {
     public static boolean gt(double a, double b) {
         return a > b;
     }

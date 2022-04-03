@@ -3,6 +3,7 @@ package com.keybase.aminin.storage;
 import com.keybase.aminin.heaps.MaximumHeap;
 import com.keybase.aminin.heaps.MedianCounter;
 import com.keybase.aminin.heaps.MinimumHeap;
+import com.keybase.aminin.model.SymbolMedianData;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ public class TickersHashMap {
     }
 
     public void initializeHashMap(List<String> initTickers) {
-        this.isInitialized = true;
         this.hashStorage = new HashStorage(initTickers);
         this.medians = new MedianCounter[initTickers.size()];
         populateMedians();
         this.tickers = initTickers;
+        this.isInitialized = true;
     }
 
     public void addPrice(String ticker, double price) {
@@ -32,12 +33,18 @@ public class TickersHashMap {
         medians[index].addPrice(price);
     }
 
-    public double getMedianByTicker(String ticker) {
+    public SymbolMedianData getSymbolMedianData(String ticker) {
         int index = hashStorage.getTickerIndex(ticker);
         if (index == -1) {
             throw new IllegalArgumentException("There is no such ticker{" + ticker + "}.");
         }
-        return medians[index].getMedian();
+        MedianCounter medianCounter = medians[index];
+        return new SymbolMedianData(
+                ticker,
+                medianCounter.getObsNumber(),
+                medianCounter.getMedian(),
+                medianCounter.getLastPrice()
+        );
     }
 
     public List<String> getTickers() {

@@ -20,20 +20,30 @@ public class HashStorage {
         char[] chars = ticker.toCharArray();
         Node cur = root;
         for (char aChar : chars) {
-            Node curLetter = root.getFieldByIndex(aChar - 'A');
+            int index = getIndexByChar(aChar);
+            Node curLetter = root.getFieldByIndex(index);
             if (curLetter == null) {
                 curLetter = new Node();
             }
-            cur = cur.setChildByIndex(aChar - 'A', curLetter);
+            cur = cur.setChildByIndex(index, curLetter);
         }
         cur.setValue(tickerIndex);
+    }
+
+    private int getIndexByChar(char aChar) {
+        if (Character.isDigit(aChar)) {
+            return 26 + aChar - '0';
+        } else if (Character.isLetter(aChar)) {
+            return Character.toUpperCase(aChar) - 'A';
+        }
+        return 73;
     }
 
     public int getTickerIndex(String ticker) {
         char[] chars = ticker.toCharArray();
         Node cur = root;
         for (char aChar : chars) {
-            cur = cur.getFieldByIndex(aChar - 'A');
+            cur = cur.getFieldByIndex(getIndexByChar(aChar));
             if (cur == null) {
                 return -1;
             }
