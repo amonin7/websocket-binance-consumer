@@ -45,3 +45,12 @@ services:
       - "8081:8081"
     build: go-api
 
+  java-api:
+    depends_on:
+      - go-handler
+    ports:
+      - "8080:8080"
+    build: main-api/
+    environment:
+      GO_API_HOST: http://go-handler:8081/tradePairs
+      KAFKA_BOOTSTRAPADDRESS: kafka:29092
